@@ -20,6 +20,13 @@ export class AuthService {
     this.redicrectURL = 'http://localhost:3000/auth/google/callback';
   }
 
+  /*** Steps to be done!
+   * 1) discovery the server within the client id and client secret
+   * 2) generate the random pure string and store it inside the session (it will not be sent over google oauth)
+   * 3) generate the hased version of this string
+   * 4) Send this hashed string within the configiration and built the complete redirectUrl
+   * 5)
+   */
   async googleAuthUrlHandle(session: any): Promise<URL> {
     let config = await client.discovery(
       this.server,
@@ -64,7 +71,6 @@ export class AuthService {
         idTokenExpected: true,
       });
 
-      // 3. FIX: Get actual user info, not OS info!
       const claims = tokens.claims();
       const user = await client.fetchUserInfo(
         config,
@@ -77,7 +83,7 @@ export class AuthService {
 
       return { tokens, user };
     } catch (err) {
-      console.error(err); // Always log the real error for debugging
+      console.error(err);
       throw new BadRequestException(`Authentication Failed: ${err.message}`);
     }
   }

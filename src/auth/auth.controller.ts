@@ -18,6 +18,7 @@ export class AuthController {
   @Get('/google/callback')
   async googleCallback(@Req() request: Request, @Session() session: any) {
     const fullUrl = `${request.protocol}://${request.get('host')}${request.originalUrl}`;
+    console.log(`The full URL in google CAllback ${fullUrl}`);
     return await this.authService.handleTheCallback(fullUrl, session);
   }
 }
